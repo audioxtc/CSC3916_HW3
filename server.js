@@ -127,7 +127,7 @@ router.route('/movies')
 
         movie.leadActors = req.body.leadactors;
         if (movie.leadActors.length < 3){
-            res.status(405).send({success: false, msg: 'Movie must contain minimum 3 actors.'})
+            res.json({success: false, msg: 'Movie must contain minimum 3 actors.'})
         }
         movie.title = req.body.title;
         movie.year = req.body.year;
