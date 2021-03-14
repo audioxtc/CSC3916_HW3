@@ -23,7 +23,7 @@ var movieSchema = new Schema({
     //         Western
     genre: String,
     //must have at least three
-    actors: [{Actor}]
+    actors: [Actor]
 
 });
 
