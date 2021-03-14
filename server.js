@@ -134,6 +134,11 @@ router.route('/movies')
             Actor.actorName = req.body.actorName;
             Actor.characterName = req.body.characterName;
             actorList.push(Actor);
+            Movie.push(actorList);
+            Movie.save(function(err) {
+                if (err) throw err;
+                console.log('Movie saved.');
+            });
         }
         var o = getJSONObjectForMovieRequirement(req);
         o.body={msg:"movie saved."}
