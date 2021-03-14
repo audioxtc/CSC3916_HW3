@@ -19,8 +19,7 @@ var actor = new Actor();
 //create a schema
 var movieSchema = new Schema({
 
-    id: String,
-    title: String,
+    title: {type: String, required: true, index: {true, dropDups: true }},
     year: Date,
     //Action, Adventure, Comedy, Drama, Fantasy, Horror, Mystery, Thriller,
     //         Western
@@ -31,6 +30,30 @@ var movieSchema = new Schema({
         characterName: String
     }]
 
+});
+
+//validate year, number of actors, genre
+movieSchema.pre('save', function(next) {
+    let movie = this;
+    const genres = ['Action', 'Adventure', 'Comedy', 'Drama', 'Fantasy', 'Horror', 'Mystery', 'Thriller', 'Western'];
+    let date = new Date();
+    if (this.title === '') {
+        return next({code: 400, message: "Title cannot be null."})
+    }
+    if (this.year === '' || this.year > date.getFullYear()) {
+        return next({code: 400, message: "Invalid year."})
+    }
+    if (!genres.includes(this.genre) || this.genre === '') {
+        return next({code: 400, message: "Invalid genre."})
+    }
+    if (this.leadActors.length < 3) {
+        return next({code: 400, message: "Movie must contain minimum 3 actors."})
+    }
+    if (this.leadActors.actorName === '' || this.leadActors.characterName === '') {
+        return next({code: 400, message: "actor name or character name cannot be null."})
+    }
+    //valid movie info
+    next();
 });
 
 var Movie = mongoose.model('Movie', movieSchema);
