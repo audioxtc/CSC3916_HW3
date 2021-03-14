@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var Actor = require('./Actors');
+
 //mongoose.Promise = global.Promise;
 
 var actorlist = [];
@@ -14,14 +16,14 @@ mongoose.set('useCreateIndex', true);
 
 //create a schema
 var movieSchema = new Schema({
-    
+
     title: String,
     year: String,
     //Action, Adventure, Comedy, Drama, Fantasy, Horror, Mystery, Thriller,
     //         Western
     genre: String,
     //must have at least three
-    actors: [{actorName: String, characterName: String}]
+    actors: [{Actor}]
 
 });
 

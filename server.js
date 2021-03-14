@@ -13,7 +13,7 @@ var jwt = require('jsonwebtoken');
 var cors = require('cors');
 var User = require('./Users');
 var Movie = require('./Movies');
-//var Actor = require('./Movies');
+var Actor = require('./Actors');
 
 var app = express();
 app.use(cors());
@@ -135,7 +135,7 @@ router.route('/movies')
 
         actor.actorName = req.body.actorName;
         actor.characterName = req.body.characterName;
-        movie.actors.push(Actor);
+        movie.actors.push(actor);
 
         movie.save(function(err) {
             if (err) throw err;
