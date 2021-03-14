@@ -125,8 +125,8 @@ router.route('/movies')
         if (req.get('Content-Type')) {
             res = res.type(req.get('Content-Type'));
         }
-        let Movie = new Movie();
-        let Actor = new Actor();
+        var Movie = new Movie();
+        var Actor = new Actor();
         var actorList = [];
         Movie.title = req.body.title;
         Movie.year = req.body.year;
