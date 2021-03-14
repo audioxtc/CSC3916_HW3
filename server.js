@@ -121,10 +121,10 @@ router.route('/movies')
         res.json(o);
     }
 ).post(authJwtController.isAuthenticated, function(req, res) {
-        console.log(req.body);
-        res = res.status(200);
-        if (req.get(req.body.title)) {
-            res = res.type(req.get('Content-Type'));
+        //console.log(req.body);
+
+        if (req.get('Content-Type')) {
+        //res = res.type(req.get('Content-Type'));
             var Movie = new Movie();
             var Actor = new Actor();
             var actorList = [];
@@ -140,6 +140,7 @@ router.route('/movies')
                 console.log('Movie saved.');
             });
         }
+        res = res.status(200);
         var o = getJSONObjectForMovieRequirement(req);
         o.body={msg:"movie saved."}
         res.json(o);
