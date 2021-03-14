@@ -131,8 +131,8 @@ router.route('/movies')
         movie.id = req.body.id;
         for (let i=0; i<4; i++){
             var actor = new Actor();
-            actor.actorName[i] = req.body.leadactor.actorName;
-            actor.characterName[i] = req.body.leadactor.characterName;
+            actor.actorName[i] = req.body.leadactors.actorName;
+            actor.characterName[i] = req.body.leadactors.characterName;
             movie.leadActors.push(actor);
         }
 
