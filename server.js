@@ -123,6 +123,7 @@ router.route('/movies')
 ).post(authJwtController.isAuthenticated, function(req, res) {
         console.log(req.body);
         var movie = new Movie();
+            if (err) throw err;
         movie.leadActors = req.body.leadactors;
         movie.title = req.body.title;
         movie.year = req.body.year;
