@@ -123,7 +123,6 @@ router.route('/movies')
 ).post(authJwtController.isAuthenticated, function(req, res) {
         console.log(req.body);
         var movie = new Movie();
-
         var leadActors = [];
         movie.leadactors = req.body.leadactors;
         movie.title = req.body.title;
@@ -133,8 +132,8 @@ router.route('/movies')
         for (let i=0; i<3; i++){
             let actor = new Actor();
             actor.actorid = i;
-            actor.actorName = movie.leadactors.actorName;
-            actor.characterName = movie.leadactors.characterName;
+            actor.actorName = movie.leadactors.actorName[i];
+            actor.characterName = movie.leadactors.characterName[i];
             movie.leadActors.push(actor);
         }
         //movie.leadActors = leadActors;
