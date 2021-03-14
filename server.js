@@ -125,6 +125,7 @@ router.route('/movies')
         var movie = new Movie();
 
         var leadActors = [];
+        movie.leadactors = req.body.leadactors;
         movie.title = req.body.title;
         movie.year = req.body.year;
         movie.genre = req.body.genre;
@@ -132,11 +133,11 @@ router.route('/movies')
         for (let i=0; i<3; i++){
             let actor = new Actor();
             actor.actorid = i;
-            actor.actorName = req.body.leadactors.actorName;
-            actor.characterName = req.body.leadactors.characterName;
-            leadActors.push(actor);
+            actor.actorName = movie.leadactors[i].actorName;
+            actor.characterName = movie.leadactors[i].characterName;
+            movie.leadActors.push(actor);
         }
-        movie.leadActors = leadActors;
+        //movie.leadActors = leadActors;
 
         movie.save(function(err) {
             if (err) throw err;
