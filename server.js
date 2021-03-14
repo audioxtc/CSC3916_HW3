@@ -136,7 +136,7 @@ router.route('/movies')
             actor.characterName = req.body.leadactors.characterName;
             leadActors.push(actor);
         }
-        //movie.leadActors = leadActors;
+        movie.leadActors = leadActors;
 
         movie.save(function(err) {
             if (err) throw err;
