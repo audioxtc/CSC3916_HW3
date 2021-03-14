@@ -122,22 +122,18 @@ router.route('/movies')
     }
 ).post(authJwtController.isAuthenticated, function(req, res) {
         console.log(req.body);
+
         var movie = new Movie();
-        var leadActors = [];
+
         movie.leadActors = req.body.leadactors;
+        if (length(movie.leadActors) < 3){
+            res.status(405).send({success: false, msg: 'Movie must contain minimum 3 actors.'})
+        }
         movie.title = req.body.title;
         movie.year = req.body.year;
         movie.genre = req.body.genre;
         movie.id = req.body.movieid;
-        //for (let i=0; i<3; i++){
-        //    let actor = new Actor();
-        //    actor.actorid = i;
-        //    actor.actorName = movie.leadActors[i].actorName;
-        //    console.log('iteration', i);
-        //    actor.characterName = movie.leadActors[i].characterName;
-        //    movie.leadActors.push(actor);
-        //}
-        //movie.leadActors = leadActors;
+
 
         movie.save(function(err) {
             if (err) throw err;
