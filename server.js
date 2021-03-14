@@ -122,22 +122,19 @@ router.route('/movies')
     }
 ).post(authJwtController.isAuthenticated, function(req, res) {
         console.log(req.body);
-        //if (req.get('Content-Type')) {
-        //    res = res.type(req.get('Content-Type'));
-        //}
         var movie = new Movie();
-        var actor = new Actor();
+
         var leadActors = [];
         movie.title = req.body.title;
         movie.year = req.body.year;
         movie.genre = req.body.genre;
         movie.id = req.body.id;
         for (leadactor in req.body.leadactors){
+            var actor = new Actor();
             actor.actorName = req.body.leadactor.actorName;
             actor.characterName = req.body.leadactor.characterName;
             movie.leadActors.push(actor);
         }
-        //movie.actors.push(movie.actorName, movie.characterName);
 
         movie.save(function(err) {
             if (err) throw err;
