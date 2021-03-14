@@ -12,25 +12,20 @@ try {
 }
 mongoose.set('useCreateIndex', true);
 
-var actorSchema = new Schema({
-    actorName: String,
-    characterName: String
-});
-
 //create a schema
 var movieSchema = new Schema({
+    
     title: String,
     year: String,
     //Action, Adventure, Comedy, Drama, Fantasy, Horror, Mystery, Thriller,
     //         Western
     genre: String,
     //must have at least three
-    actors: [Actor]
+    actors: [{actorName: String, characterName: String}]
 
 });
 
 var Movie = mongoose.model('Movie', movieSchema);
-var Actor = mongoose.model('Actor', actorSchema);
 
 module.exports = Movie;
-module.exports = Actor;
+

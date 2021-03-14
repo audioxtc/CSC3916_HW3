@@ -13,7 +13,7 @@ var jwt = require('jsonwebtoken');
 var cors = require('cors');
 var User = require('./Users');
 var Movie = require('./Movies');
-var Actor = require('./Movies');
+//var Actor = require('./Movies');
 
 var app = express();
 app.use(cors());
@@ -122,19 +122,21 @@ router.route('/movies')
     }
 ).post(authJwtController.isAuthenticated, function(req, res) {
         console.log(req.body);
-        if (req.get('Content-Type')) {
-            res = res.type(req.get('Content-Type'));
-        }
+        //if (req.get('Content-Type')) {
+        //    res = res.type(req.get('Content-Type'));
+        //}
+
         var Movie = new Movie();
         var Actor = new Actor();
         var actorList = [];
         Movie.title = req.body.title;
         Movie.year = req.body.year;
         Movie.genre = req.body.genre;
+
         Actor.actorName = req.body.actorName;
         Actor.characterName = req.body.characterName;
-        actorList.push(Actor);
-        Movie.push(actorList);
+        Movie.actors.push(Actor);
+
         Movie.save(function(err) {
             if (err) throw err;
             console.log('Movie saved.');
