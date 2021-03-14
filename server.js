@@ -133,9 +133,9 @@ router.route('/movies')
         movie.year = req.body.year;
         movie.genre = req.body.genre;
 
-        //actor.actorName = req.body.actorName;
-        //actor.characterName = req.body.characterName;
-        //movie.actors.push(actor);
+        movie.actorName = req.body.actorName;
+        movie.characterName = req.body.characterName;
+        movie.actors.push(movie.actorName, movie.characterName);
 
         movie.save(function(err) {
             if (err) throw err;
