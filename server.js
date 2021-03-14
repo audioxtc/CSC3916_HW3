@@ -133,8 +133,8 @@ router.route('/movies')
         for (let i=0; i<3; i++){
             let actor = new Actor();
             actor.actorid = i;
-            actor.actorName = movie.leadactors[i].actorName;
-            actor.characterName = movie.leadactors[i].characterName;
+            actor.actorName = movie.leadactors.actorName;
+            actor.characterName = movie.leadactors.characterName;
             movie.leadActors.push(actor);
         }
         //movie.leadActors = leadActors;
