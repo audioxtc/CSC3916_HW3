@@ -19,7 +19,7 @@ var actor = new Actor();
 //create a schema
 var movieSchema = new Schema({
 
-    title: {type: String, required: true, index: {true, dropDups: true }},
+    title: {type: String, required: true, index: {unique: true, dropDups: true }},
     year: Date,
     //Action, Adventure, Comedy, Drama, Fantasy, Horror, Mystery, Thriller,
     //         Western
