@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-mongoose.Promise = global.Promise;
+//mongoose.Promise = global.Promise;
 
 var actorlist = [];
 
@@ -25,7 +25,7 @@ var movieSchema = new Schema({
     //         Western
     genre: String,
     //must have at least three
-    actors: actorlist
+    actors: [Actor]
 
 });
 
