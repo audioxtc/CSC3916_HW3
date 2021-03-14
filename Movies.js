@@ -14,8 +14,11 @@ try {
 }
 mongoose.set('useCreateIndex', true);
 
+var actor = new Actor();
+
 //create a schema
 var movieSchema = new Schema({
+
 
     title: String,
     year: String,
@@ -23,7 +26,7 @@ var movieSchema = new Schema({
     //         Western
     genre: String,
     //must have at least three
-    actors: [Actor]
+    actors: [actor]
 
 });
 
