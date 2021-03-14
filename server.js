@@ -85,6 +85,54 @@ router.post('/signin', function (req, res) {
     })
 });
 
+//implement movie route
+router.route('/movies')
+    .get(authJwtController.isAuthenticated, function(req, res) {
+        console.log(req.body);
+        res = res.status(200);
+        if (req.get('Content-Type')) {
+            res = res.type(req.get('Content-Type'));
+        }
+        var o = getJSONObjectForMovieRequirement(req);
+        o.body={msg:"GET movies."}
+        res.json(o);
+
+    }).put(authJwtController.isAuthenticated, function(req, res) {
+        console.log(req.body);
+        res = res.status(200);
+        if (req.get('Content-Type')) {
+            res = res.type(req.get('Content-Type'));
+        }
+        var o = getJSONObjectForMovieRequirement(req);
+        o.body={msg:"movie updated."}
+        res.json(o);
+    }
+).delete(authController.isAuthenticated, function(req, res) {
+        console.log(req.body);
+        res = res.status(200);
+        if (req.get('Content-Type')) {
+            res = res.type(req.get('Content-Type'));
+        }
+        var o = getJSONObjectForMovieRequirement(req);
+
+        o.body={msg:"movie deleted."}
+        res.json(o);
+    }
+).post(authJwtController.isAuthenticated, function(req, res) {
+        console.log(req.body);
+        res = res.status(200);
+        if (req.get('Content-Type')) {
+            res = res.type(req.get('Content-Type'));
+        }
+        var o = getJSONObjectForMovieRequirement(req);
+        o.body={msg:"movie saved."}
+        res.json(o);
+    }
+).all(function (req, res){
+        res.status(405).send({success: false, msg: 'HTTP method not implemented.'})
+    }
+);
+
 app.use('/', router);
 app.listen(process.env.PORT || 8080);
 module.exports = app; // for testing only
