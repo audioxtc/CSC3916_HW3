@@ -12,7 +12,7 @@ try {
 mongoose.set('useCreateIndex', true);
 
 var actorSchema = new Schema({
-
+    actorid: Number,
     actorName: String,
     characterName: String
 
