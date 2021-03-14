@@ -129,7 +129,7 @@ router.route('/movies')
         movie.year = req.body.year;
         movie.genre = req.body.genre;
         movie.id = req.body.id;
-        for (let i=0; i<length(req.body.leadactors); i++){
+        for (let i=0; i<3; i++){
             let actor = new Actor();
             actor.actorid = i;
             actor.actorName = req.body.leadactors.actorName;
