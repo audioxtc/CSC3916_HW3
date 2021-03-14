@@ -20,7 +20,7 @@ var actor = new Actor();
 var movieSchema = new Schema({
 
     title: {type: String, required: true, index: {unique: true, dropDups: true }},
-    year: Date,
+    year: Number,
     //Action, Adventure, Comedy, Drama, Fantasy, Horror, Mystery, Thriller,
     //         Western
     genre: String,
