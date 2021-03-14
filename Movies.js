@@ -20,12 +20,12 @@ var actor = new Actor();
 var movieSchema = new Schema({
 
     title: String,
-    year: String,
+    year: Date,
     //Action, Adventure, Comedy, Drama, Fantasy, Horror, Mystery, Thriller,
     //         Western
     genre: String,
     //must have at least three
-    actors: [{
+    leadActors: [{
         actorName: String,
         characterName: String
     }]

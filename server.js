@@ -125,21 +125,17 @@ router.route('/movies')
         //if (req.get('Content-Type')) {
         //    res = res.type(req.get('Content-Type'));
         //}
-
         var movie = new Movie();
         var actor = new Actor();
-        var actors = [];
+        var leadActors = [];
         movie.title = req.body.title;
         movie.year = req.body.year;
         movie.genre = req.body.genre;
-
-        //actors.push(movie['actorName'] = req.body.actorName);
-        //actors.push(movie['characterName'] = req.body.characterName);
-
+        movie.id = req.body.id;
         actor.actorName = req.body.actorName;
         actor.characterName = req.body.characterName;
         //movie.actors.push(movie.actorName, movie.characterName);
-        movie.actors.push(actor);
+        movie.leadActors.push(actor);
         movie.save(function(err) {
             if (err) throw err;
             console.log('Movie saved.');
