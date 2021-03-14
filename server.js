@@ -127,15 +127,15 @@ router.route('/movies')
         //}
 
         var movie = new Movie();
-        var actor = new Actor();
+        //var actor = new Actor();
         var actors = [];
         movie.title = req.body.title;
         movie.year = req.body.year;
         movie.genre = req.body.genre;
 
-        actor['actorName'] = req.body.actorName;
-        actor['characterName'] = req.body.characterName;
-        actors.push(actor);
+        actors.push(movie['actorName'] = req.body.actorName);
+        actors.push(movie['characterName'] = req.body.characterName);
+
         //actor.actorName = req.body.actorName;
         //actor.characterName = req.body.characterName;
         //movie.actors.push(movie.actorName, movie.characterName);
