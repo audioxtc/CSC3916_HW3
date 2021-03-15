@@ -88,8 +88,7 @@ router.post('/signin', function (req, res) {
 });
 
 //implement movie route
-router.route('/movies')
-    .get(authJwtController.isAuthenticated, function (req, res) {
+router.get('/movies', authJwtController.isAuthenticated, function (req, res) {
         console.log(req.body);
         //var movie = new Movie();
         Movie.find({}, function(err, movies){
@@ -105,7 +104,7 @@ router.route('/movies')
             }
         })
 
-    })
+    });
 
     /*
     .put(authJwtController.isAuthenticated, function (req, res) {
@@ -140,7 +139,8 @@ router.route('/movies')
 )
 
      */
-.delete(authController.isAuthenticated, function (req, res) {
+
+router.delete('/movies', authController.isAuthenticated, function (req, res) {
 
         console.log(req.body);
         Movie.findOneAndDelete()
@@ -153,7 +153,8 @@ router.route('/movies')
         o.body = {msg: "movie deleted."}
         res.json(o);
     }
-).post(authJwtController.isAuthenticated, function (req, res) {
+)
+router.post('/movies', authJwtController.isAuthenticated, function (req, res) {
         console.log(req.body);
         var movie = new Movie();
         movie.leadActors = req.body.leadactors;
