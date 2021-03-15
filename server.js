@@ -169,7 +169,7 @@ router.route('/movies')
     }
 );
 
-route.put('/movies/:id', authJwtController.isAuthenticated, function(req, res, next) {
+router.put('/movies/:id', authJwtController.isAuthenticated, function(req, res, next) {
     movie = new Movie();
     movie.findById('id', function(err, movie){
         if (err){
