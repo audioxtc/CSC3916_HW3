@@ -90,8 +90,8 @@ router.post('/signin', function (req, res) {
 router.route('/movies')
     .get(authJwtController.isAuthenticated, function (req, res) {
         console.log(req.body);
-        var movie = new Movie();
-        movie.find({}, function(err, movies){
+        //var movie = new Movie();
+        Movie.find({}, function(err, movies){
             if (err) {
                 res.status(405).send(err);
                 console.log(movies);
@@ -99,7 +99,7 @@ router.route('/movies')
             else{
                 var o = getJSONObjectForMovieRequirement(req);
                 res = res.status(200);
-                o.body = {msg: {movies}};
+                o.body = {msg: [movies]};
                 res.json(o);
             }
         })
