@@ -14,7 +14,7 @@ var cors = require('cors');
 var User = require('./Users');
 var Movie = require('./Movies');
 var Actor = require('./Actors');
-var ObjectID = require('mongodb').ObjectID;
+
 
 var app = express();
 app.use(cors());
@@ -170,13 +170,14 @@ router.route('/movies')
     }
 );
 
-router.put('/movies/:id', authJwtController.isAuthenticated, function(req, res, next) {
+router.put('/movies/:title', authJwtController.isAuthenticated, function(req, res, next) {
 
-    var iD = req.params.id;
-    console.log(iD);
+    //var iD = req.params.id;
+
     movie = new Movie();
+    movie.title = req.params.title;
     //var o_id = new ObjectID();
-    movie.findById(iD, function(err, movie){
+    Movie.findOne({title: movie.title},function(err, movie) {
         if (err){
             res.status(405).send(err);
         }
