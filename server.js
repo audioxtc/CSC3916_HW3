@@ -172,13 +172,13 @@ router.route('/movies')
 
 router.put('/movies/:id', authJwtController.isAuthenticated, function(req, res, next) {
 
-    var id = req.params.id;
-    console.log(id);
+    var iD = req.params.id;
+    console.log(iD);
     movie = new Movie();
     //var o_id = new ObjectID();
-    movie.findById(id, function(err, movie){
+    movie.findById(iD, function(err, movie){
         if (err){
-            res.status(405).send(err)
+            res.status(405).send(err);
         }
         else {
             movie.leadActors = req.body.leadactors;
@@ -191,7 +191,7 @@ router.put('/movies/:id', authJwtController.isAuthenticated, function(req, res, 
             res.json(o);
         }
     })
-})
+});
 
 app.use('/', router);
 app.listen(process.env.PORT || 8080);
