@@ -106,6 +106,28 @@ router.route('/movies')
         })
 
     })
+    .put('/movies/:title', authJwtController.isAuthenticated,
+        function(req, res, next) {
+
+    movie = new Movie();
+    movie.title = req.params.title;
+    //var o_id = new ObjectID();
+    Movie.findOne({title: movie.title},function(err, movie) {
+        if (err){
+            res.status(405).send(err);
+        }
+        else {
+            movie.leadActors = req.body.leadactors;
+            movie.year = req.body.year;
+            movie.genre = req.body.genre;
+            console.log(movie);
+            var o = getJSONObjectForMovieRequirement(req);
+            res = res.status(200);
+            o.body = {msg: "movie updated."}
+            res.json(o);
+        }
+    })
+})
     /*
     .put(authJwtController.isAuthenticated, function (req, res) {
         movie = new Movie();
@@ -177,7 +199,7 @@ router.route('/movies')
         res.status(405).send({success: false, msg: 'HTTP method not implemented.'})
     }
 );
-
+/*
 router.put('/movies/:title', authJwtController.isAuthenticated, function(req, res, next) {
 
     //var iD = req.params.id;
@@ -201,6 +223,8 @@ router.put('/movies/:title', authJwtController.isAuthenticated, function(req, re
         }
     })
 });
+
+ */
 
 app.use('/', router);
 app.listen(process.env.PORT || 8080);
