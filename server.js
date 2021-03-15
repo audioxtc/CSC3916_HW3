@@ -93,7 +93,7 @@ router.route('/movies')
         var movie = new Movie();
         movie.find({}, function(err, movies){
             if (err) {
-                res.status(405).send(err)
+                res.status(405).send(err);
                 console.log(movies);
             }
             else{
