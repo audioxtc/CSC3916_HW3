@@ -169,6 +169,25 @@ router.route('/movies')
     }
 );
 
+route.put('/movies/:id', authJwtController.isAuthenticated, function(req, res, next) {
+    movie = new Movie();
+    movie.findById('id', function(err, movie){
+        if (err){
+            res.status(405).send(err)
+        }
+        else {
+            movie.leadActors = req.body.leadactors;
+            movie.year = req.body.year;
+            movie.genre = req.body.genre;
+            movie.id = req.body.movieid;
+            var o = getJSONObjectForMovieRequirement(req);
+            res = res.status(200);
+            o.body = {msg: "movie updated."}
+            res.json(o);
+        }
+    })
+})
+
 app.use('/', router);
 app.listen(process.env.PORT || 8080);
 module.exports = app; // for testing only
