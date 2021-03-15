@@ -176,7 +176,7 @@ router.post('/movies', authJwtController.isAuthenticated, function (req, res) {
         //console.log('Movie saved.');
     });
 
-router.put('/movies/:title', authJwtController.isAuthenticated,
+router.put('/movies', authJwtController.isAuthenticated,
     function(req, res, next) {
 
     //var iD = req.params.id;
