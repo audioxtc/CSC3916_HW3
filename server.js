@@ -104,14 +104,26 @@ router.route('/movies')
             }
         })
 
-        //if (req.get('Content-Type')) {
-        //    res = res.type(req.get('Content-Type'));
-        //}
-
-
     }).put(authJwtController.isAuthenticated, function (req, res) {
+        movie = new Movie();
+        movie.findById({id: req.body.id}, function(err, movie){
+            if (err){
+                res.status(405).send(err)
+            }
+            else {
+                movie.leadActors = req.body.leadactors;
+                movie.title = req.body.title;
+                movie.year = req.body.year;
+                movie.genre = req.body.genre;
+                movie.id = req.body.movieid;
+                var o = getJSONObjectForMovieRequirement(req);
+                res = res.status(200);
+                o.body = {msg: "movie updated."}
+                res.json(o);
+            }
+        })
         console.log(req.body);
-        res = res.status(200);
+
         if (req.get('Content-Type')) {
             res = res.type(req.get('Content-Type'));
         }
@@ -121,6 +133,7 @@ router.route('/movies')
     }
 ).delete(authController.isAuthenticated, function (req, res) {
         console.log(req.body);
+        Movie.findOneAndDelete()
         res = res.status(200);
         if (req.get('Content-Type')) {
             res = res.type(req.get('Content-Type'));
