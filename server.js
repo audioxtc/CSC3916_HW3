@@ -90,13 +90,24 @@ router.post('/signin', function (req, res) {
 router.route('/movies')
     .get(authJwtController.isAuthenticated, function (req, res) {
         console.log(req.body);
-        res = res.status(200);
-        if (req.get('Content-Type')) {
-            res = res.type(req.get('Content-Type'));
-        }
-        var o = getJSONObjectForMovieRequirement(req);
-        o.body = {msg: "GET movies."}
-        res.json(o);
+        var movie = new Movie();
+        movie.find({}, function(err, movies){
+            if (err) {
+                res.status(405).send(err)
+                console.log(movies);
+            }
+            else{
+                var o = getJSONObjectForMovieRequirement(req);
+                res = res.status(200);
+                o.body = {msg: {movies}};
+                res.json(o);
+            }
+        })
+
+        //if (req.get('Content-Type')) {
+        //    res = res.type(req.get('Content-Type'));
+        //}
+
 
     }).put(authJwtController.isAuthenticated, function (req, res) {
         console.log(req.body);
