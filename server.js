@@ -116,7 +116,7 @@ router.route('/movies')
                 movie.title = req.body.title;
                 movie.year = req.body.year;
                 movie.genre = req.body.genre;
-                movie.id = req.body.movieid;
+                //movie.id = req.body.movieid;
                 var o = getJSONObjectForMovieRequirement(req);
                 res = res.status(200);
                 o.body = {msg: "movie updated."}
@@ -151,7 +151,7 @@ router.route('/movies')
         movie.title = req.body.title;
         movie.year = req.body.year;
         movie.genre = req.body.genre;
-        movie.id = req.body.movieid;
+        //movie.id = req.body.movieid;
         movie.save(function (err)  {
             if (err) {
                 res.status(405).send(err)
@@ -173,7 +173,7 @@ router.route('/movies')
 router.put('/movies/:id', authJwtController.isAuthenticated, function(req, res, next) {
 
     var id = req.params.id;
-    //movie = new Movie();
+    movie = new Movie();
     //var o_id = new ObjectID();
     Movie.findById(id, function(err, movie){
         if (err){
@@ -183,7 +183,7 @@ router.put('/movies/:id', authJwtController.isAuthenticated, function(req, res, 
             movie.leadActors = req.body.leadactors;
             movie.year = req.body.year;
             movie.genre = req.body.genre;
-            movie.id = req.body.movieid;
+
             var o = getJSONObjectForMovieRequirement(req);
             res = res.status(200);
             o.body = {msg: "movie updated."}
