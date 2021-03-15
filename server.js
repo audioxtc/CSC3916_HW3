@@ -173,9 +173,10 @@ router.route('/movies')
 router.put('/movies/:id', authJwtController.isAuthenticated, function(req, res, next) {
 
     var id = req.params.id;
+    console.log(id);
     movie = new Movie();
     //var o_id = new ObjectID();
-    Movie.findById(id, function(err, movie){
+    movie.findById(id, function(err, movie){
         if (err){
             res.status(405).send(err)
         }
@@ -183,7 +184,7 @@ router.put('/movies/:id', authJwtController.isAuthenticated, function(req, res, 
             movie.leadActors = req.body.leadactors;
             movie.year = req.body.year;
             movie.genre = req.body.genre;
-
+            console.log(movie);
             var o = getJSONObjectForMovieRequirement(req);
             res = res.status(200);
             o.body = {msg: "movie updated."}
