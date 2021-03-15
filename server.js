@@ -105,7 +105,9 @@ router.route('/movies')
             }
         })
 
-    }).put(authJwtController.isAuthenticated, function (req, res) {
+    })
+    /*
+    .put(authJwtController.isAuthenticated, function (req, res) {
         movie = new Movie();
         movie.findById({id: req.body.id}, function(err, movie){
             if (err){
@@ -132,7 +134,13 @@ router.route('/movies')
         o.body = {msg: "movie updated."}
         res.json(o);
     }
-).delete(authController.isAuthenticated, function (req, res) {
+
+
+)
+
+     */
+.delete(authController.isAuthenticated, function (req, res) {
+
         console.log(req.body);
         Movie.findOneAndDelete()
         res = res.status(200);
