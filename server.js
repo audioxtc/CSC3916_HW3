@@ -18,7 +18,7 @@ var Actor = require('./Actors');
 var app = express();
 app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(passport.initialize());
 
@@ -42,7 +42,7 @@ function getJSONObjectForMovieRequirement(req) {
     return json;
 }
 
-router.post('/signup', function(req, res) {
+router.post('/signup', function (req, res) {
     if (!req.body.username || !req.body.password) {
         res.json({success: false, msg: 'Please include both username and password to signup.'})
     } else {
@@ -51,10 +51,10 @@ router.post('/signup', function(req, res) {
         user.username = req.body.username;
         user.password = req.body.password;
 
-        user.save(function(err){
+        user.save(function (err) {
             if (err) {
                 if (err.code == 11000)
-                    return res.json({ success: false, message: 'A user with that username already exists.'});
+                    return res.json({success: false, message: 'A user with that username already exists.'});
                 else
                     return res.json(err);
             }
@@ -69,18 +69,17 @@ router.post('/signin', function (req, res) {
     userNew.username = req.body.username;
     userNew.password = req.body.password;
 
-    User.findOne({ username: userNew.username }).select('name username password').exec(function(err, user) {
+    User.findOne({username: userNew.username}).select('name username password').exec(function (err, user) {
         if (err) {
             res.send(err);
         }
 
-        user.comparePassword(userNew.password, function(isMatch) {
+        user.comparePassword(userNew.password, function (isMatch) {
             if (isMatch) {
-                var userToken = { id: user.id, username: user.username };
+                var userToken = {id: user.id, username: user.username};
                 var token = jwt.sign(userToken, process.env.SECRET_KEY);
-                res.json ({success: true, token: 'JWT ' + token});
-            }
-            else {
+                res.json({success: true, token: 'JWT ' + token});
+            } else {
                 res.status(401).send({success: false, msg: 'Authentication failed.'});
             }
         })
@@ -89,27 +88,27 @@ router.post('/signin', function (req, res) {
 
 //implement movie route
 router.route('/movies')
-    .get(authJwtController.isAuthenticated, function(req, res) {
+    .get(authJwtController.isAuthenticated, function (req, res) {
         console.log(req.body);
         res = res.status(200);
         if (req.get('Content-Type')) {
             res = res.type(req.get('Content-Type'));
         }
         var o = getJSONObjectForMovieRequirement(req);
-        o.body={msg:"GET movies."}
+        o.body = {msg: "GET movies."}
         res.json(o);
 
-    }).put(authJwtController.isAuthenticated, function(req, res) {
+    }).put(authJwtController.isAuthenticated, function (req, res) {
         console.log(req.body);
         res = res.status(200);
         if (req.get('Content-Type')) {
             res = res.type(req.get('Content-Type'));
         }
         var o = getJSONObjectForMovieRequirement(req);
-        o.body={msg:"movie updated."}
+        o.body = {msg: "movie updated."}
         res.json(o);
     }
-).delete(authController.isAuthenticated, function(req, res) {
+).delete(authController.isAuthenticated, function (req, res) {
         console.log(req.body);
         res = res.status(200);
         if (req.get('Content-Type')) {
@@ -117,29 +116,31 @@ router.route('/movies')
         }
         var o = getJSONObjectForMovieRequirement(req);
 
-        o.body={msg:"movie deleted."}
+        o.body = {msg: "movie deleted."}
         res.json(o);
     }
-).post(authJwtController.isAuthenticated, function(req, res) {
+).post(authJwtController.isAuthenticated, function (req, res) {
         console.log(req.body);
         var movie = new Movie();
-            if (err) throw err;
         movie.leadActors = req.body.leadactors;
         movie.title = req.body.title;
         movie.year = req.body.year;
         movie.genre = req.body.genre;
         movie.id = req.body.movieid;
-        movie.save(function (err) {
-            if (err) throw err;
-            console.log('Movie saved.');
+        movie.save(function (err)  {
+            if (err) {
+                res.status(405).send(err)
+            }
+            else {
+                var o = getJSONObjectForMovieRequirement(req);
+                res = res.status(200);
+                o.body = {msg: "movie saved."};
+                res.json(o);
+            }
         });
-        res = res.status(200);
-        var o = getJSONObjectForMovieRequirement(req);
-        o.body = {msg: "movie saved."}
-        res.json(o);
-
+        //console.log('Movie saved.');
     }
-).all(function (req, res){
+).all(function (req, res) {
         res.status(405).send({success: false, msg: 'HTTP method not implemented.'})
     }
 );
