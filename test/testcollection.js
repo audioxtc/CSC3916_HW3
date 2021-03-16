@@ -14,10 +14,23 @@ let login_details = {
     password: '123@abc'
 }
 
-describe('Register, Login and Call Test Collection with Basic Auth and JWT Auth', () => {
-   beforeEach((done) => { //Before each test initialize the database to empty
-       //db.userList = [];
+let movie_details = {
+    title: 'Notting Hill',
+    year: 1999,
+    genre: 'Comedy',
+    leadactors: [
+        {actorName: 'Hugh Grant', characterName: 'William Thacker'},
+        {actorName: 'Julia Roberts', characterName: 'Anna Scott'},
+        {actorName: 'Rhys Ifans', characterName: 'Spike'}
+    ]
+}
 
+describe('Register, Login and Call Test Collection with Basic Auth and JWT Auth', () => {
+   before((done) => { //Before each test initialize the database to empty
+       //db.userList = [];
+       User.deleteOne({ name: 'test'}, function(err, user){
+           if (err) throw err;
+       });
        done();
     })
 
@@ -48,7 +61,21 @@ describe('Register, Login and Call Test Collection with Basic Auth and JWT Auth'
                         res.body.should.have.property('token');
                         let token = res.body.token;
                         console.log(token);
-                        done();
+                        //chai.request(server)
+                        //    .post('/movies')
+                        //    .set('Authorization', token)
+                        //    .send(movie_details)
+                        //    .end((err, res) => {
+                        //        res.should.have.status(200);
+                                chai.request(server)
+                                    .put('/movies/:title=Notting Hill')
+                                    .set('Authorization', token)
+                                    .send(movie_details)
+                                    .end((err, res) => {
+                                        res.should.have.status(200);
+                                        done();
+                                   // })
+                            })
                     })
               })
         })

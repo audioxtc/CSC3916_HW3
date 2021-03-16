@@ -165,6 +165,7 @@ router.post('/movies', authJwtController.isAuthenticated, function (req, res) {
         movie.save(function (err)  {
             if (err) {
                 res.status(405).send(err)
+                console.log(err)
             }
             else {
                 var o = getJSONObjectForMovieRequirement(req);
@@ -178,28 +179,41 @@ router.post('/movies', authJwtController.isAuthenticated, function (req, res) {
 
 router.put('/movies/:title', authJwtController.isAuthenticated,
     function(req, res) {
-
     //var iD = req.params.id;
-
-    movie = new Movie();
-    movie.title = req.params.title;
+    var movie1 = new Movie();
+    //movie2.title = req.params.title;
     //var o_id = new ObjectID();
-    Movie.findOne({title: movie.title},function(err, movie) {
+    Movie.find({title: req.params.title},function(err, movie) {
         if (err){
             res.status(405).send(err);
         }
         else {
-            movie.leadActors = req.body.leadactors;
-            movie.year = req.body.year;
-            movie.genre = req.body.genre;
+            movie1 = movie;
+            if (req.body.year){
+                movie1.year = req.body.year;
+            }
             console.log(movie);
-            var o = getJSONObjectForMovieRequirement(req);
-            res = res.status(200);
-            o.body = {msg: "movie updated."}
-            res.json(o);
-        }
-    })
-});
+            //movie2.title = movie.title;
+            //movie2.leadActors = req.body.leadactors;
+            //movie.leadActors = req.body.leadactors;
+            //movie2.year = req.body.year;
+            //movie.year = req.body.year;
+            //movie2.genre = req.body.genre;
+            movie1.save(function(err){
+                if (err){
+                    res.status(405).send(err);
+                }
+                else {
+                    console.log(movie);
+                    var o = getJSONObjectForMovieRequirement(req);
+                    res = res.status(200);
+                    o.body = {msg: "movie updated."}
+                    res.json(o);
+                }
+                });
+            }
+        });
+    });
 
 
 app.use('/', router);

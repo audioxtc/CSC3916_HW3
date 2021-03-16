@@ -49,8 +49,10 @@ movieSchema.pre('save', function(next) {
     if (this.leadActors.length < 3) {
         return next({code: 400, message: "Movie must contain minimum 3 actors."})
     }
-    if (this.leadActors.actorName === '' || this.leadActors.characterName === '') {
-        return next({code: 400, message: "actor name or character name cannot be null."})
+    for (i=0; i<this.leadActors.length; i++) {
+        if (this.leadActors[i].actorName === '' || this.leadActors[i].characterName === '') {
+            return next({code: 400, message: "actor name or character name cannot be null."})
+        }
     }
     //valid movie info
     next();
