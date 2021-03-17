@@ -161,7 +161,7 @@ router.delete('/movies', authJwtController.isAuthenticated, function (req, res) 
         });
     }
     if (req.body.id){
-        Movie.findOneAndDelete({_id: req.body.id}), function (err, movie) {
+        Movie.findOneAndDelete({id: req.body.id}), function (err, movie) {
             if (err) {
                 res.status(405).send(err);
                 console.log(err);
