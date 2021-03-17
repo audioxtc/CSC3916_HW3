@@ -163,7 +163,7 @@ router.delete('/movies', authJwtController.isAuthenticated, function (req, res) 
     if (req.body.id){
         console.log("got to id");
 
-        Movie.find({id: req.body.id}), function (err, docs) {
+        Movie.find({_id: req.body.id}), function (err, docs) {
             if (err) {
                 res.status(405).send(err);
                 console.log(err);
@@ -177,6 +177,9 @@ router.delete('/movies', authJwtController.isAuthenticated, function (req, res) 
                 res.json(o);
             }
         }
+    }
+    else {
+        res.json("Must enter a valid movie title.");
     }
 });
 
@@ -213,7 +216,6 @@ router.put('/movies', authJwtController.isAuthenticated,
     Movie.findOne({title: req.body.title},function(err, movie) {
         console.log(movie);
         if (err){
-            throw (err)
             res.status(405).send(err);
         }
         else {
@@ -223,13 +225,13 @@ router.put('/movies', authJwtController.isAuthenticated,
             if (req.body.genre){
                 movie.genre = req.body.genre;
             }
+            if (req.body.leadactors.length > 0){
+                for (let i=0; i<req.body.leadactors.length; i++){
+                    movie.leadActors[i].actorName = req.body.leadactors[i].actorName;
+                    movie.leadActors[i].characterName = req.body.leadactors[i].characterName;
+                }
+            }
             console.log(movie);
-            //movie2.title = movie.title;
-            //movie2.leadActors = req.body.leadactors;
-            //movie.leadActors = req.body.leadactors;
-            //movie2.year = req.body.year;
-            //movie.year = req.body.year;
-            //movie2.genre = req.body.genre;
             movie.save(function(err){
                 if (err){
                     res.status(405).send(err);

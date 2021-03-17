@@ -17,13 +17,13 @@ let login_details = {
 let movie_details = {
     title: "Notting Hill",
     //id: "001",
-    year: 1999,
+    //year: 1999,
     //genre: 'Comedy',
-    //leadactors: [
-    //    {actorName: 'Hugh Grant', characterName: 'William Thacker'},
-    //    {actorName: 'Julia Roberts', characterName: 'Anna Scott'},
-    //    {actorName: 'Rhys Ifans', characterName: 'Spike'}
-    //]
+    leadactors: [
+        {actorName: 'Hugh Grant', characterName: 'William Thacker'},
+        {actorName: 'Julia Roberts', characterName: 'Anna Scott'},
+        {actorName: 'Rhys Ifans', characterName: 'Spike'}
+    ]
 }
 
 describe('Register, Login and Call Test Collection with Basic Auth and JWT Auth', () => {

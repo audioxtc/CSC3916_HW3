@@ -19,7 +19,6 @@ var actor = new Actor();
 //create a schema
 var movieSchema = new Schema({
 
-    id: Number,
     title: {type: String, required: true, index: {unique: true, dropDups: true }},
     year: Number,
     //Action, Adventure, Comedy, Drama, Fantasy, Horror, Mystery, Thriller,
@@ -41,7 +40,7 @@ movieSchema.pre('save', function(next) {
     if (this.title === '') {
         return next({code: 400, message: "Title cannot be null."})
     }
-    if (this.year === '' || this.year > date.getFullYear()) {
+    if (this.year === null || this.year > date.getFullYear()) {
         return next({code: 400, message: "Invalid year."})
     }
     if (!genres.includes(this.genre) || this.genre === '') {
