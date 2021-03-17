@@ -140,20 +140,45 @@ router.get('/movies', authJwtController.isAuthenticated, function (req, res) {
 
      */
 
-router.delete('/movies', authController.isAuthenticated, function (req, res) {
-
-        console.log(req.body);
-        Movie.findOneAndDelete()
-        res = res.status(200);
-        if (req.get('Content-Type')) {
-            res = res.type(req.get('Content-Type'));
-        }
-        var o = getJSONObjectForMovieRequirement(req);
-
-        o.body = {msg: "movie deleted."}
-        res.json(o);
+router.delete('/movies', authJwtController.isAuthenticated, function (req, res) {
+    //if (req.get('Content-Type')) {
+    //    res = res.type(req.get('Content-Type'));
+    //}
+    if (req.body.title) {
+        Movie.findOneAndDelete({title: req.body.title}, function (err, movie) {
+            if (err) {
+                res.status(405).send(err);
+                console.log(err);
+                return res.json(err);
+            }
+            else {
+                res = res.status(200);
+                console.log("Movie deleted successfully.");
+                var o = getJSONObjectForMovieRequirement(req);
+                o.body = {msg: "movie deleted."}
+                res.json(o);
+            }
+        });
     }
-)
+    if (req.body.id){
+        Movie.findOneAndDelete({_id: req.body.id}), function (err, movie) {
+            if (err) {
+                res.status(405).send(err);
+                console.log(err);
+                return res.json(err);
+            }
+            else {
+                res = res.status(200);
+                console.log("Movie deleted successfully.");
+                var o = getJSONObjectForMovieRequirement(req);
+                o.body = {msg: "movie deleted."}
+                res.json(o);
+            }
+        }
+    }
+});
+
+
 router.post('/movies', authJwtController.isAuthenticated, function (req, res) {
         console.log(req.body);
         var movie = new Movie();
@@ -164,8 +189,8 @@ router.post('/movies', authJwtController.isAuthenticated, function (req, res) {
         //movie.id = req.body.movieid;
         movie.save(function (err)  {
             if (err) {
-                res.status(405).send(err)
-                console.log(err)
+                res.status(405).send(err);
+                console.log(err);
             }
             else {
                 var o = getJSONObjectForMovieRequirement(req);
@@ -177,20 +202,24 @@ router.post('/movies', authJwtController.isAuthenticated, function (req, res) {
         //console.log('Movie saved.');
     });
 
-router.put('/movies/:title', authJwtController.isAuthenticated,
+router.put('/movies/:id', authJwtController.isAuthenticated,
     function(req, res) {
     //var iD = req.params.id;
-    var movie1 = new Movie();
+    var movie = new Movie();
     //movie2.title = req.params.title;
     //var o_id = new ObjectID();
-    Movie.find({title: req.params.title},function(err, movie) {
+    Movie.findById(req.params.id,function(err, movie) {
+        console.log(movie);
         if (err){
+            throw (err)
             res.status(405).send(err);
         }
         else {
-            movie1 = movie;
             if (req.body.year){
-                movie1.year = req.body.year;
+                movie.year = req.body.year;
+            }
+            if (req.body.genre){
+                movie.genre = req.body.genre;
             }
             console.log(movie);
             //movie2.title = movie.title;
@@ -199,7 +228,7 @@ router.put('/movies/:title', authJwtController.isAuthenticated,
             //movie2.year = req.body.year;
             //movie.year = req.body.year;
             //movie2.genre = req.body.genre;
-            movie1.save(function(err){
+            movie.save(function(err){
                 if (err){
                     res.status(405).send(err);
                 }

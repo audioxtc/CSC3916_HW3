@@ -15,14 +15,14 @@ let login_details = {
 }
 
 let movie_details = {
-    title: 'Notting Hill',
-    year: 1999,
-    genre: 'Comedy',
-    leadactors: [
-        {actorName: 'Hugh Grant', characterName: 'William Thacker'},
-        {actorName: 'Julia Roberts', characterName: 'Anna Scott'},
-        {actorName: 'Rhys Ifans', characterName: 'Spike'}
-    ]
+    title: 'Coming 2 America',
+    //year: 1999,
+    //genre: 'Comedy',
+    //leadactors: [
+    //    {actorName: 'Hugh Grant', characterName: 'William Thacker'},
+    //    {actorName: 'Julia Roberts', characterName: 'Anna Scott'},
+    //    {actorName: 'Rhys Ifans', characterName: 'Spike'}
+    //]
 }
 
 describe('Register, Login and Call Test Collection with Basic Auth and JWT Auth', () => {
@@ -68,7 +68,7 @@ describe('Register, Login and Call Test Collection with Basic Auth and JWT Auth'
                         //    .end((err, res) => {
                         //        res.should.have.status(200);
                                 chai.request(server)
-                                    .put('/movies/:title=Notting Hill')
+                                    .delete('/movies')
                                     .set('Authorization', token)
                                     .send(movie_details)
                                     .end((err, res) => {
