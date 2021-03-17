@@ -15,8 +15,9 @@ let login_details = {
 }
 
 let movie_details = {
-    title: 'Coming 2 America',
-    //year: 1999,
+    title: "Gone With The Wind",
+    //id: "001",
+    year: 1939,
     //genre: 'Comedy',
     //leadactors: [
     //    {actorName: 'Hugh Grant', characterName: 'William Thacker'},
@@ -68,7 +69,7 @@ describe('Register, Login and Call Test Collection with Basic Auth and JWT Auth'
                         //    .end((err, res) => {
                         //        res.should.have.status(200);
                                 chai.request(server)
-                                    .delete('/movies')
+                                    .put('/movies')
                                     .set('Authorization', token)
                                     .send(movie_details)
                                     .end((err, res) => {
