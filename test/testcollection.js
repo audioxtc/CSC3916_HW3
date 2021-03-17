@@ -15,9 +15,9 @@ let login_details = {
 }
 
 let movie_details = {
-    title: "Gone With The Wind",
+    title: "Notting Hill",
     //id: "001",
-    year: 1939,
+    year: 1999,
     //genre: 'Comedy',
     //leadactors: [
     //    {actorName: 'Hugh Grant', characterName: 'William Thacker'},

@@ -148,12 +148,12 @@ router.delete('/movies', authJwtController.isAuthenticated, function (req, res) 
         Movie.findOneAndDelete({title: req.body.title}, function (err, docs) {
             if (err) {
                 res.status(405).send(err);
-                console.log(err);
+                console.log(err, docs);
                 return res.json(err);
             }
             else {
                 res = res.status(200);
-                console.log("Movie deleted successfully:", docs);
+                console.log("Movie deleted successfully:");
                 var o = getJSONObjectForMovieRequirement(req);
                 o.body = {msg: "movie deleted."}
                 res.json(o);
@@ -189,12 +189,10 @@ router.post('/movies', authJwtController.isAuthenticated, function (req, res) {
         movie.year = req.body.year;
         movie.genre = req.body.genre;
         //movie.id = req.body.movieid;
-
         movie.save(function (err)  {
             if (err) {
                 res.status(405).send(err);
                 console.log(err);
-
             }
             else {
                 var o = getJSONObjectForMovieRequirement(req);
