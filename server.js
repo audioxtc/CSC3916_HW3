@@ -106,6 +106,25 @@ router.get('/movies', authJwtController.isAuthenticated, function (req, res) {
 
     });
 
+router.get('/movies/:movieID', authJwtController.isAuthenticated, function (req, res) {
+    let movieID
+    console.log(req.body);
+    //var movie = new Movie();
+    Movie.find({}, function(err, movies){
+        if (err) {
+            res.status(405).send(err);
+            console.log(movies);
+        }
+        else{
+            var o = getJSONObjectForMovieRequirement(req);
+            res = res.status(200);
+            o.body = {msg: [movies]};
+            res.json(o);
+        }
+    })
+
+});
+
     /*
     .put(authJwtController.isAuthenticated, function (req, res) {
         movie = new Movie();
@@ -177,9 +196,6 @@ router.delete('/movies', authJwtController.isAuthenticated, function (req, res) 
                 res.json(o);
             }
         }
-    }
-    else {
-        res.json("Must enter a valid movie title.");
     }
 });
 
