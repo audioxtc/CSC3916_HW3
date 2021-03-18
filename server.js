@@ -246,7 +246,7 @@ router.put('/movies', authJwtController.isAuthenticated,
             if (req.body.genre){
                 movie.genre = req.body.genre;
             }
-            if (req.body.leadactors.length > 0){
+            if (req.body.leadactors){
                 for (let i=0; i<req.body.leadactors.length; i++){
                     movie.leadActors[i].actorName = req.body.leadactors[i].actorName;
                     movie.leadActors[i].characterName = req.body.leadactors[i].characterName;
