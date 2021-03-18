@@ -201,14 +201,7 @@ router.delete('/movies', authJwtController.isAuthenticated, function (req, res) 
             }
         }
     }
-    if(deletedDocument) {
-        console.log(`Successfully deleted document that had the form: ${deletedDocument}.`)
-    } else {
-        console.log("No document matches the provided query.")
-    }
-    return deletedDocument
-})
-    .catch(err => console.error(`Failed to find and delete document: ${err}`))
+
 });
 
 
