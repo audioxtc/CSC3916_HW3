@@ -170,9 +170,13 @@ router.delete('/movies', authJwtController.isAuthenticated, function (req, res) 
                 console.log(err, docs);
                 return res.json(err);
             }
+            if (docs === null){
+                res=res.status(401);
+                return res.json("Movie not found.");
+            }
             else {
                 res = res.status(200);
-                console.log("Movie deleted successfully:");
+                console.log(docs);
                 var o = getJSONObjectForMovieRequirement(req);
                 o.body = {msg: "movie deleted."}
                 res.json(o);
@@ -197,6 +201,14 @@ router.delete('/movies', authJwtController.isAuthenticated, function (req, res) 
             }
         }
     }
+    if(deletedDocument) {
+        console.log(`Successfully deleted document that had the form: ${deletedDocument}.`)
+    } else {
+        console.log("No document matches the provided query.")
+    }
+    return deletedDocument
+})
+    .catch(err => console.error(`Failed to find and delete document: ${err}`))
 });
 
 
